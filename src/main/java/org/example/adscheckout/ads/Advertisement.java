@@ -5,13 +5,13 @@ import java.util.Objects;
 public class Advertisement {
 
   private final String name;
-  private final String displayName;
+  private final String display;
   private final String description;
   private final Price price;
 
-  public Advertisement(String name, String displayName, String description, Price price) {
+  public Advertisement(String name, String display, String description, Price price) {
     this.name = name;
-    this.displayName = displayName;
+    this.display = display;
     this.description = description;
     this.price = price;
   }
@@ -20,8 +20,8 @@ public class Advertisement {
     return name;
   }
 
-  public String getDisplayName() {
-    return displayName;
+  public String getDisplay() {
+    return display;
   }
 
   public String getDescription() {

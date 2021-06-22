@@ -3,6 +3,7 @@ package org.example.adscheckout.ads;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +14,7 @@ class AdvertisementStoreFactoryTest {
   private static final String TEST_DIR = "src/test/resources/config";
 
   @Test
-  void givenValidConfig_whenBuilding_thenCorrect() throws InvalidConfigurationException {
+  void givenValidConfig_whenBuilding_thenCorrect() throws InvalidConfigurationException, IOException {
     File file = confFile("good_config.json");
 
     AdvertisementStore store = AdvertisementStoreFactory.fromConfig(file);
@@ -22,7 +23,7 @@ class AdvertisementStoreFactoryTest {
             "classic",
             "Classic Ad",
             "Offers the most basic level of advertisement",
-            new Price(199))),
+            new Price(9999))),
         store.retrieveAd("classic")
     );
   }
