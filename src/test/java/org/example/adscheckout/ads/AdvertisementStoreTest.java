@@ -2,6 +2,7 @@ package org.example.adscheckout.ads;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,6 +16,7 @@ class AdvertisementStoreTest {
     store.putAd(ad);
 
     assertEquals(Optional.of(ad), store.retrieveAd("TEST"));
+    assertEquals(Collections.singleton(ad), store.retrieveAllAds());
   }
 
   @Test
@@ -25,5 +27,6 @@ class AdvertisementStoreTest {
     store.putAd(ad);
 
     assertEquals(Optional.empty(), store.retrieveAd("NOT_TEST"));
+    assertEquals(Collections.singleton(ad), store.retrieveAllAds());
   }
 }

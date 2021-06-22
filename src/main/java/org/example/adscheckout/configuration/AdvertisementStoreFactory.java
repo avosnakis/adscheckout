@@ -1,8 +1,12 @@
-package org.example.adscheckout.ads;
+package org.example.adscheckout.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.adscheckout.ads.Advertisement;
+import org.example.adscheckout.ads.AdvertisementStore;
+import org.example.adscheckout.ads.InvalidConfigurationException;
+import org.example.adscheckout.ads.Price;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

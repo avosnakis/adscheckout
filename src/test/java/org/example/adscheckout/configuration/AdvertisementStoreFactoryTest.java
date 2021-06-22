@@ -1,9 +1,15 @@
-package org.example.adscheckout.ads;
+package org.example.adscheckout.configuration;
 
+import org.example.adscheckout.ads.Advertisement;
+import org.example.adscheckout.ads.AdvertisementStore;
+import org.example.adscheckout.ads.InvalidConfigurationException;
+import org.example.adscheckout.ads.Price;
+import org.example.adscheckout.configuration.AdvertisementStoreFactory;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,13 +25,13 @@ class AdvertisementStoreFactoryTest {
 
     AdvertisementStore store = AdvertisementStoreFactory.fromConfig(file);
 
-    assertEquals(Optional.of(new Advertisement(
-            "classic",
-            "Classic Ad",
-            "Offers the most basic level of advertisement",
-            new Price(9999))),
-        store.retrieveAd("classic")
-    );
+    Advertisement expected = new Advertisement(
+        "classic",
+        "Classic Ad",
+        "Offers the most basic level of advertisement",
+        new Price(9999));
+    assertEquals(Optional.of(expected), store.retrieveAd("classic"));
+    assertEquals(Collections.singleton(expected), store.retrieveAllAds());
   }
 
   @Test
