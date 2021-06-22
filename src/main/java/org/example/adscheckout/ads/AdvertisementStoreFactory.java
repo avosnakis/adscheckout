@@ -8,7 +8,7 @@ public class AdvertisementStoreFactory {
 
   private static final ObjectMapper mapper = new ObjectMapper();
 
-  public AdvertisementStore fromConfig(File file) {
+  public static AdvertisementStore fromConfig(File file) throws InvalidConfigurationException {
     return new AdvertisementStore();
   }
 }
