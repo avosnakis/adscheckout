@@ -10,8 +10,7 @@ class AdvertisementStoreTest {
 
   @Test
   void givenAdInStore_whenRetrieving_getsAd() {
-    Advertisement ad = new Advertisement("TEST", "TEST",
-        new Price(199));
+    Advertisement ad = new Advertisement("TEST", "Test", "TEST", new Price(199));
     AdvertisementStore store = new AdvertisementStore();
     store.putAd(ad);
 
@@ -20,7 +19,7 @@ class AdvertisementStoreTest {
 
   @Test
   void givenAdInStore_whenRetrievingWithNonexistentId_getsEmpty() {
-    Advertisement ad = new Advertisement("TEST", "TEST",
+    Advertisement ad = new Advertisement("TEST", "Test", "TEST",
         new Price(199));
     AdvertisementStore store = new AdvertisementStore();
     store.putAd(ad);

@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "username": "secondbite",
+      "display": "SecondBite"
+    },
+    {
+      "username": "axil",
+      "display": "Axil Coffee Roasters"
+    },
+    {
+      "username": "myer",
+      "display": "MYER"
+    }
+  ],
+  "ads": [
+    {
+      "name": "classic",
+      "display": "Classic Ad",
+      "description": "Offers the most basic level of advertisement",
+      "price": "26999"
+    },
+    {
+      "name": "standout",
+      "display": "Stand Out Ad",
+      "description": "Allows advertisers to use a company logo and use a longer presentation text",
+      "price": "32299"
+    },
+    {
+      "name": "premium",
+      "display": "Premium Ad",
+      "description": "Same benefits as Standout Ad, but also puts the advertisement at the top of the results, allowing higher visibility",
+      "price": "39499"
+    }
+  ]
+}
