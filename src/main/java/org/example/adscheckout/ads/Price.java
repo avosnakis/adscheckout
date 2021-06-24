@@ -14,6 +14,10 @@ public class Price {
     this.priceInCents = priceInCents;
   }
 
+  public int getPriceInCents() {
+    return priceInCents;
+  }
+
   /**
    * @return The price formatted with a dollar sign and decimal point.
    */

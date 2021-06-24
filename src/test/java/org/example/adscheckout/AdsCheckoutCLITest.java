@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,7 +27,7 @@ class AdsCheckoutCLITest {
   @Test
   void givenLoggedInAsTestuser_whenCheckingOutAd_givesCorrectPrice() throws Exception {
     InputStream inputStream = new ByteArrayInputStream(
-        "1\ntestuser\n1\nclassic\n2\nexit".getBytes()
+        "testuser\n1\nclassic\n3\n".getBytes()
     );
     AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
     adsCheckoutCLI.execute("src/test/resources/config/good_config.json");
@@ -43,14 +42,14 @@ class AdsCheckoutCLITest {
   @Test
   void whenTryingToLoginAsNonexistentUser_givesError() throws Exception {
     InputStream inputStream = new ByteArrayInputStream(
-        "1\nnotarealuser\n2".getBytes()
+        "notarealuser\n".getBytes()
     );
     AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
     adsCheckoutCLI.execute("src/test/resources/config/good_config.json");
 
     assertTrue(containsStringParts(
         outputStream.toString(),
-        "Invalid user."
+        "Unknown user."
         )
     );
   }
@@ -58,14 +57,14 @@ class AdsCheckoutCLITest {
   @Test
   void whenTryingToCheckoutNonexistentAd_givesError() throws Exception {
     InputStream inputStream = new ByteArrayInputStream(
-        "1\ntestuser\n1\nnot_a_real_ad\n2\nexit".getBytes()
+        "testuser\n1\nnot_a_real_ad\n3\nexit".getBytes()
     );
     AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
     adsCheckoutCLI.execute("src/test/resources/config/good_config.json");
 
     assertTrue(containsStringParts(
         outputStream.toString(),
-        "not_a_real_ad not found.",
+        "Could not find not_a_real_ad.",
         "$0.00"
         )
     );
@@ -84,6 +83,38 @@ class AdsCheckoutCLITest {
     AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(new ByteArrayInputStream("".getBytes()), printStream);
     assertThrows(InvalidConfigurationException.class,
         adsCheckoutCLI::execute
+    );
+  }
+
+  @Test
+  void givenLoggedInAsTestuser_whenListingAds_givesCorrectAds() throws Exception {
+    InputStream inputStream = new ByteArrayInputStream(
+        "testuser\n2\n3\n".getBytes()
+    );
+    AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
+    adsCheckoutCLI.execute("src/test/resources/config/good_config.json");
+
+    assertTrue(containsStringParts(
+        outputStream.toString(),
+        "classic",
+        "Classic Ad",
+        "$99.99"
+        )
+    );
+  }
+
+  @Test
+  void givenLoggedInAsTestuser_whenUsingExitCommand_givesCorrectlyExits() throws Exception {
+    InputStream inputStream = new ByteArrayInputStream(
+        "testuser\n4".getBytes()
+    );
+    AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
+    adsCheckoutCLI.execute("src/test/resources/config/good_config.json");
+
+    assertTrue(containsStringParts(
+        outputStream.toString(),
+        "Exiting Ads Shopping system."
+        )
     );
   }
 
