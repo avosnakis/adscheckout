@@ -4,6 +4,7 @@ import org.example.adscheckout.Cart;
 import org.example.adscheckout.ads.Advertisement;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -41,5 +42,23 @@ public class BogoDeal implements Deal {
     int remainderPrice = remainder * applicableAd.getPrice().getPriceInCents();
 
     return groupsPrice + remainderPrice;
+  }
+
+  @Override
+  public Advertisement getApplicableAd() {
+    return applicableAd;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    BogoDeal bogoDeal = (BogoDeal) o;
+    return priceOfN == bogoDeal.priceOfN && nToGet == bogoDeal.nToGet && Objects.equals(applicableAd, bogoDeal.applicableAd);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(priceOfN, nToGet, applicableAd);
   }
 }

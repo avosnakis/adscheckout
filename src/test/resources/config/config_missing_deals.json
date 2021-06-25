@@ -1,4 +1,10 @@
 {
+  "users": [
+    {
+      "username": "testuser",
+      "display": "Test User"
+    }
+  ],
   "ads": [
     {
       "name": "classic",
@@ -6,6 +12,5 @@
       "description": "Offers the most basic level of advertisement",
       "price": 9999
     }
-  ],
-  "deals": []
+  ]
 }

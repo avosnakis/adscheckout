@@ -7,10 +7,19 @@
   ],
   "ads": [
     {
+      "name": "classic",
       "display": "Classic Ad",
       "description": "Offers the most basic level of advertisement",
-      "price": "9999"
+      "price": 9999
     }
   ],
-  "deals": []
+  "deals": [
+    {
+      "user": "testuser",
+      "type": "bogodeal",
+      "ad": "not_an_ad",
+      "priceOfN": 3,
+      "nToGot": 4
+    }
+  ]
 }
