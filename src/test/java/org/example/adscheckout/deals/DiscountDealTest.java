@@ -1,11 +1,12 @@
 package org.example.adscheckout.deals;
 
-import org.example.adscheckout.Cart;
 import org.example.adscheckout.ads.Advertisement;
 import org.example.adscheckout.ads.Price;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiscountDealTest {
 
@@ -14,10 +15,8 @@ class DiscountDealTest {
     Advertisement advertisement = new Advertisement("classic", "", "", new Price(100));
 
     DiscountDeal discountDeal = new DiscountDeal(50, advertisement);
-    Cart cart = new Cart();
-    cart.addToCart(advertisement);
 
-    assertEquals(50, discountDeal.applyDeal(cart));
+    assertEquals(50, discountDeal.applyDeal(List.of(advertisement)));
   }
 
   @Test
@@ -25,11 +24,7 @@ class DiscountDealTest {
     Advertisement advertisement = new Advertisement("classic", "", "", new Price(100));
 
     DiscountDeal discountDeal = new DiscountDeal(50, advertisement);
-    Cart cart = new Cart();
-    cart.addToCart(advertisement);
-    cart.addToCart(advertisement);
 
-    assertEquals(100, discountDeal.applyDeal(cart));
+    assertEquals(100, discountDeal.applyDeal(List.of(advertisement, advertisement)));
   }
-
 }

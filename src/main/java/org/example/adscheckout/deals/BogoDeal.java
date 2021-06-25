@@ -1,6 +1,5 @@
 package org.example.adscheckout.deals;
 
-import org.example.adscheckout.Cart;
 import org.example.adscheckout.ads.Advertisement;
 
 import java.util.List;
@@ -29,8 +28,8 @@ public class BogoDeal implements Deal {
   }
 
   @Override
-  public int applyDeal(Cart cart) {
-    List<Advertisement> applicableAds = cart.getAds()
+  public int applyDeal(List<Advertisement> ads) {
+    List<Advertisement> applicableAds = ads
         .stream()
         .filter(ad -> ad.getName().equals(applicableAd.getName()))
         .collect(Collectors.toList());

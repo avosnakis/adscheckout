@@ -1,8 +1,8 @@
 package org.example.adscheckout.deals;
 
-import org.example.adscheckout.Cart;
 import org.example.adscheckout.ads.Advertisement;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,8 +22,8 @@ public class DiscountDeal implements Deal {
   }
 
   @Override
-  public int applyDeal(Cart cart) {
-    int numApplicableAds = (int) cart.getAds()
+  public int applyDeal(List<Advertisement> ads) {
+    int numApplicableAds = (int) ads
         .stream()
         .filter(ad -> ad.getName().equals(applicableAd.getName()))
         .count();

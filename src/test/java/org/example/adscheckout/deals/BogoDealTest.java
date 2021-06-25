@@ -5,6 +5,9 @@ import org.example.adscheckout.ads.Advertisement;
 import org.example.adscheckout.ads.Price;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BogoDealTest {
@@ -14,11 +17,11 @@ class BogoDealTest {
     Advertisement ad = new Advertisement("classic", "", "", new Price(100));
     BogoDeal bogoDeal = new BogoDeal(1, 2, ad);
 
-    Cart cart = new Cart();
-    cart.addToCart(ad);
-    cart.addToCart(ad);
+    List<Advertisement> ads = new ArrayList<>();
+    ads.add(ad);
+    ads.add(ad);
 
-    assertEquals(100, bogoDeal.applyDeal(cart));
+    assertEquals(100, bogoDeal.applyDeal(ads));
   }
 
   @Test
@@ -26,12 +29,12 @@ class BogoDealTest {
     Advertisement ad = new Advertisement("classic", "", "", new Price(100));
     BogoDeal bogoDeal = new BogoDeal(1, 3, ad);
 
-    Cart cart = new Cart();
-    cart.addToCart(ad);
-    cart.addToCart(ad);
-    cart.addToCart(ad);
+    List<Advertisement> ads = new ArrayList<>();
+    ads.add(ad);
+    ads.add(ad);
+    ads.add(ad);
 
-    assertEquals(100, bogoDeal.applyDeal(cart));
+    assertEquals(100, bogoDeal.applyDeal(ads));
   }
 
   @Test
@@ -39,12 +42,12 @@ class BogoDealTest {
     Advertisement ad = new Advertisement("classic", "", "", new Price(100));
     BogoDeal bogoDeal = new BogoDeal(1, 2, ad);
 
-    Cart cart = new Cart();
-    cart.addToCart(ad);
-    cart.addToCart(ad);
-    cart.addToCart(ad);
+    List<Advertisement> ads = new ArrayList<>();
+    ads.add(ad);
+    ads.add(ad);
+    ads.add(ad);
 
-    assertEquals(200, bogoDeal.applyDeal(cart));
+    assertEquals(200, bogoDeal.applyDeal(ads));
   }
 
   @Test
@@ -52,12 +55,12 @@ class BogoDealTest {
     Advertisement ad = new Advertisement("classic", "", "", new Price(100));
     BogoDeal bogoDeal = new BogoDeal(2, 3, ad);
 
-    Cart cart = new Cart();
-    cart.addToCart(ad);
-    cart.addToCart(ad);
-    cart.addToCart(ad);
+    List<Advertisement> ads = new ArrayList<>();
+    ads.add(ad);
+    ads.add(ad);
+    ads.add(ad);
 
-    assertEquals(200, bogoDeal.applyDeal(cart));
+    assertEquals(200, bogoDeal.applyDeal(ads));
   }
 
   @Test
@@ -65,14 +68,14 @@ class BogoDealTest {
     Advertisement ad = new Advertisement("classic", "", "", new Price(100));
     BogoDeal bogoDeal = new BogoDeal(4, 5, ad);
 
-    Cart cart = new Cart();
-    cart.addToCart(ad);
-    cart.addToCart(ad);
-    cart.addToCart(ad);
-    cart.addToCart(ad);
-    cart.addToCart(ad);
+    List<Advertisement> ads = new ArrayList<>();
+    ads.add(ad);
+    ads.add(ad);
+    ads.add(ad);
+    ads.add(ad);
+    ads.add(ad);
 
-    assertEquals(400, bogoDeal.applyDeal(cart));
+    assertEquals(400, bogoDeal.applyDeal(ads));
   }
 
   @Test
@@ -81,10 +84,10 @@ class BogoDealTest {
     Advertisement otherAd = new Advertisement("notclassic", "", "", new Price(200));
     BogoDeal bogoDeal = new BogoDeal(1, 2, ad);
 
-    Cart cart = new Cart();
-    cart.addToCart(ad);
-    cart.addToCart(otherAd);
+    List<Advertisement> ads = new ArrayList<>();
+    ads.add(ad);
+    ads.add(otherAd);
 
-    assertEquals(100, bogoDeal.applyDeal(cart));
+    assertEquals(100, bogoDeal.applyDeal(ads));
   }
 }
