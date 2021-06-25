@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * CLI for the application.
@@ -39,7 +40,8 @@ public class AdsCheckoutCLI {
   private static final int ADD_CODE = 1;
   private static final int LIST_CODE = 2;
   private static final int CHECKOUT_CODE = 3;
-  private static final int EXIT_CODE = 4;
+  private static final int CART_CODE = 4;
+  private static final int EXIT_CODE = 5;
 
   private final InputStream inputStream;
   private final PrintStream printStream;
@@ -118,6 +120,8 @@ public class AdsCheckoutCLI {
         } else if (res == CHECKOUT_CODE) {
           checkout(cart, deals);
           return;
+        } else if (res == CART_CODE) {
+          displayCart(cart, deals);
         } else if (res == EXIT_CODE) {
           printStream.println("Exiting Ads Shopping system.");
           return;
@@ -136,6 +140,20 @@ public class AdsCheckoutCLI {
     Price finalPrice = new DealApplier().applyDeals(cart.getAds(), deals);
     printStream.printf("Checking out, total price is %s.%n", finalPrice.getFormattedPrice());
     printStream.println("Thank you for using the Ads Shopping system!");
+  }
+
+  private void displayCart(Cart cart, List<Deal> deals) {
+    DealApplier dealApplier = new DealApplier();
+    Map<String, List<Advertisement>> adGroups = cart.getAds()
+        .stream()
+        .collect(Collectors.groupingBy(
+            Advertisement::getDisplay
+        ));
+
+    for (Map.Entry<String, List<Advertisement>> adGroup : adGroups.entrySet()) {
+      Price adPrice = dealApplier.applyDeals(adGroup.getValue(), deals);
+      printStream.printf("%dx %s for %s.%n", adGroup.getValue().size(), adGroup.getKey(), adPrice.getFormattedPrice());
+    }
   }
 
   private void displayAds(AdvertisementStore adStore) {
@@ -161,11 +179,12 @@ public class AdsCheckoutCLI {
 
 
   private void usage() {
+    printStream.println();
     printStream.printf("Type %d to place an ad in your cart," +
         " %d to list available ads," +
         " %d to checkout," +
-        " or %d to exit.%n", ADD_CODE, LIST_CODE, CHECKOUT_CODE, EXIT_CODE);
-    printStream.println();
+        " %d to view your cart," +
+        " or %d to exit.%n", ADD_CODE, LIST_CODE, CHECKOUT_CODE, CART_CODE, EXIT_CODE);
   }
 
   private Optional<User> login(UserStore userStore, Scanner scanner) {

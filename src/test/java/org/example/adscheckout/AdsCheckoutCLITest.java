@@ -106,7 +106,7 @@ class AdsCheckoutCLITest {
   @Test
   void givenLoggedInAsTestuser_whenUsingExitCommand_givesCorrectlyExits() throws Exception {
     InputStream inputStream = new ByteArrayInputStream(
-        "testuser\n4".getBytes()
+        "testuser\n5".getBytes()
     );
     AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
     adsCheckoutCLI.execute("src/test/resources/config/good_config.json");
@@ -129,6 +129,22 @@ class AdsCheckoutCLITest {
     assertTrue(containsStringParts(
         outputStream.toString(),
         "$49.99"
+        )
+    );
+  }
+
+  @Test
+  void givenLoggedInAsTestuser_whenCheckingOutAdWithDiscountAndShowingCart_givesCorrectPrice() throws Exception {
+    InputStream inputStream = new ByteArrayInputStream(
+        "testuser\n1\nclassic\n4\n5".getBytes()
+    );
+    AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
+    adsCheckoutCLI.execute("src/test/resources/config/good_config_with_deal.json");
+
+    System.out.println(outputStream.toString());
+    assertTrue(containsStringParts(
+        outputStream.toString(),
+        "1x Classic Ad for $49.99"
         )
     );
   }
