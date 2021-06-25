@@ -32,5 +32,33 @@
       "description": "Same benefits as Standout Ad, but also puts the advertisement at the top of the results, allowing higher visibility",
       "price": "39499"
     }
+  ],
+  "deals": [
+    {
+      "user": "secondbite",
+      "type": "bogodeal",
+      "ad": "classic",
+      "nToGet": 3,
+      "priceOfN": 2
+    },
+    {
+      "user": "axil",
+      "type": "discountdeal",
+      "ad": "classic",
+      "newPrice": 29999
+    },
+    {
+      "user": "myer",
+      "type": "bogodeal",
+      "ad": "standout",
+      "nToGet": 5,
+      "priceOfN": 4
+    },
+    {
+      "user": "myer",
+      "type": "discount",
+      "ad": "premium",
+      "newPrice": 38999
+    }
   ]
 }
