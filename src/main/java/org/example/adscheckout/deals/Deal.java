@@ -7,5 +7,5 @@ import org.example.adscheckout.Cart;
  */
 public interface Deal {
 
-  void applyDeal(Cart cart);
+  int applyDeal(Cart cart);
 }

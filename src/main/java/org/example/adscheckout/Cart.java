@@ -27,4 +27,8 @@ public class Cart {
         .sum();
     return new Price(totalPriceInCents).getFormattedPrice();
   }
+
+  public List<Advertisement> getAds() {
+    return ads;
+  }
 }
