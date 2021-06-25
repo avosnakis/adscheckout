@@ -44,4 +44,14 @@ public class Advertisement {
   public int hashCode() {
     return Objects.hash(name, description, price);
   }
+
+  @Override
+  public String toString() {
+    return "Advertisement{" +
+        "name='" + name + '\'' +
+        ", display='" + display + '\'' +
+        ", description='" + description + '\'' +
+        ", price=" + price +
+        '}';
+  }
 }

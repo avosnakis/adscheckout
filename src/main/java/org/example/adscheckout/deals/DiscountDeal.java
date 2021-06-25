@@ -47,4 +47,12 @@ public class DiscountDeal implements Deal {
   public int hashCode() {
     return Objects.hash(newPrice, applicableAd);
   }
+
+  @Override
+  public String toString() {
+    return "DiscountDeal{" +
+        "newPrice=" + newPrice +
+        ", applicableAd=" + applicableAd +
+        '}';
+  }
 }

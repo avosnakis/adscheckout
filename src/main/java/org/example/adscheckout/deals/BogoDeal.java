@@ -60,4 +60,13 @@ public class BogoDeal implements Deal {
   public int hashCode() {
     return Objects.hash(priceOfN, nToGet, applicableAd);
   }
+
+  @Override
+  public String toString() {
+    return "BogoDeal{" +
+        "priceOfN=" + priceOfN +
+        ", nToGet=" + nToGet +
+        ", applicableAd=" + applicableAd +
+        '}';
+  }
 }

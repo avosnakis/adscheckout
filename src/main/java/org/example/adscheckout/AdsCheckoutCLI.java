@@ -5,9 +5,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.adscheckout.ads.Advertisement;
 import org.example.adscheckout.ads.AdvertisementStore;
+import org.example.adscheckout.ads.Price;
 import org.example.adscheckout.configuration.AdvertisementStoreFactory;
+import org.example.adscheckout.configuration.DealFactory;
 import org.example.adscheckout.configuration.InvalidConfigurationException;
 import org.example.adscheckout.configuration.UserStoreFactory;
+import org.example.adscheckout.deals.Deal;
+import org.example.adscheckout.deals.DealApplier;
 import org.example.adscheckout.users.User;
 import org.example.adscheckout.users.UserStore;
 import org.slf4j.Logger;
@@ -17,6 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
@@ -48,6 +55,7 @@ public class AdsCheckoutCLI {
     try {
       adsCheckoutCLI.execute(args);
     } catch (InvalidConfigurationException e) {
+      LOGGER.error("Invalid configuration.", e);
       System.exit(1);
     }
   }
@@ -69,6 +77,7 @@ public class AdsCheckoutCLI {
     try {
       configJson = MAPPER.readTree(file);
     } catch (JsonProcessingException e) {
+      LOGGER.error("Invalid JSON", e);
       throw new InvalidConfigurationException("Configuration file is not valid JSON.");
     } catch (IOException e) {
       LOGGER.error("Error reading file.", e);
@@ -76,7 +85,10 @@ public class AdsCheckoutCLI {
     }
 
     AdvertisementStore advertisementStore = AdvertisementStoreFactory.fromConfig(configJson);
+
     UserStore userStore = UserStoreFactory.fromConfig(configJson);
+
+    Map<String, List<Deal>> userDeals = new DealFactory(advertisementStore).buildDeals(configJson);
 
     Scanner scanner = new Scanner(inputStream);
     Optional<User> maybeUser = login(userStore, scanner);
@@ -87,10 +99,12 @@ public class AdsCheckoutCLI {
     }
 
     User user = maybeUser.get();
-    repl(advertisementStore, scanner, user);
+    printStream.printf("Welcome, %s!%n", maybeUser.get().getDisplay());
+
+    repl(advertisementStore, scanner, userDeals.getOrDefault(user.getName(), Collections.emptyList()));
   }
 
-  private void repl(AdvertisementStore adStore, Scanner scanner, User user) {
+  private void repl(AdvertisementStore adStore, Scanner scanner, List<Deal> deals) {
     usage();
     Cart cart = new Cart();
     while (scanner.hasNext()) {
@@ -102,7 +116,7 @@ public class AdsCheckoutCLI {
         } else if (res == LIST_CODE) {
           displayAds(adStore);
         } else if (res == CHECKOUT_CODE) {
-          checkout(cart);
+          checkout(cart, deals);
           return;
         } else if (res == EXIT_CODE) {
           printStream.println("Exiting Ads Shopping system.");
@@ -118,8 +132,9 @@ public class AdsCheckoutCLI {
     }
   }
 
-  private void checkout(Cart cart) {
-    printStream.printf("Checking out, total price is %s.%n", cart.finalPrice());
+  private void checkout(Cart cart, List<Deal> deals) {
+    Price finalPrice = new DealApplier().applyDeals(cart.getAds(), deals);
+    printStream.printf("Checking out, total price is %s.%n", finalPrice.getFormattedPrice());
     printStream.println("Thank you for using the Ads Shopping system!");
   }
 

@@ -21,5 +21,4 @@ public class ConfigUtil {
       throw new InvalidConfigurationException(message);
     }
   }
-
 }

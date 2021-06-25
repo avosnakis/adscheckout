@@ -118,6 +118,21 @@ class AdsCheckoutCLITest {
     );
   }
 
+  @Test
+  void givenLoggedInAsTestuser_whenCheckingOutAdWithDiscount_givesCorrectPrice() throws Exception {
+    InputStream inputStream = new ByteArrayInputStream(
+        "testuser\n1\nclassic\n3\n".getBytes()
+    );
+    AdsCheckoutCLI adsCheckoutCLI = new AdsCheckoutCLI(inputStream, printStream);
+    adsCheckoutCLI.execute("src/test/resources/config/good_config_with_deal.json");
+
+    assertTrue(containsStringParts(
+        outputStream.toString(),
+        "$49.99"
+        )
+    );
+  }
+
   /**
    * Checks whether a string contains all of the input parts. Used instead of an equality as tbe full JSON files used
    * in the integration tests are sizeable, and checking that the unique IDs of each document are present is more robust.

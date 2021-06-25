@@ -22,6 +22,7 @@ public class AdvertisementStoreFactory {
    */
   public static AdvertisementStore fromConfig(JsonNode configNode) throws InvalidConfigurationException {
     JsonNode adsNode = configNode.path(ADS_PATH);
+
     if (!adsNode.isArray()) {
       throw new InvalidConfigurationException("Ads must be in an array.");
     }
